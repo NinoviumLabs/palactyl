@@ -1,0 +1,51 @@
+<html class="h-full">
+
+<%- include('./components/head') %>
+
+<body class="h-full bg-[#10181e] p-12" style="font-family: 'Space Grotesk'">
+    <div class="bg-transparent">
+        <div class="flex flex-col border border-white/5 lg:border-0">
+          <nav aria-label="Offers" class="order-last lg:order-first mb-8">
+            <div class="mx-auto max-w-7xl lg:px-8">
+              <ul role="list" class="grid grid-cols-1 divide-y divide-white/5 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
+                <li class="flex flex-col">
+                  <a href="#" class="relative flex flex-1 flex-col justify-center px-4 py-6 text-center focus:z-10">
+                    <p class="text-sm text-white">Sign up</p>
+                    <p class="font-semibold text-sm text-zinc-400">Create a <%= settings.name %> account.</p>
+                  </a>
+                </li>
+                <li class="flex flex-col">
+                  <a href="#" class="relative flex flex-1 flex-col justify-center px-4 py-6 text-center focus:z-10">
+                    <p class="text-sm text-white">Claim referral code</p>
+                    <p class="font-semibold text-sm text-zinc-400">Get <span class="text-emerald-400">50+ <%= settings.website.coins %></span> for free!</p>
+                  </a>
+                </li>
+                <li class="flex flex-col">
+                  <a class="relative flex flex-1 flex-col justify-center px-4 py-6 text-center focus:z-10">
+                    <p class="font-semibold text-md text-zinc-300">Referral code: <code class="text-white" style="font-family: 'Space Mono"><%= req.params.code %></code></p>
+                    <p class="font-semibold text-md text-zinc-400">Enter this on the "Your Profile" page!</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+      
+          <div class="relative">
+            <div aria-hidden="true" class="absolute hidden h-full w-1/2 bg-[#10181e] lg:block"></div>
+            <div class="relative bg-gray-100 lg:bg-transparent">
+              <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:grid lg:grid-cols-2 lg:px-8">
+                <div class="mx-auto max-w-2xl py-24 lg:max-w-none lg:py-64">
+                  <div class="lg:pr-16">
+                    <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl xl:text-6xl">You've been invited to join <%= settings.name %>!</h1>
+                    <p class="mt-4 text-md tracking-tight text-zinc-400">We're the #1 free server hosting service globally, powering over 20K game servers.</p>
+                    <div class="mt-6">
+                      <a href="../" class="inline-block rounded-2xl border border-transparent bg-[#0a9875] px-8 py-3 font-medium text-white transition">Get started</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      
+</body>

@@ -1,0 +1,80 @@
+<%- include('../components/head') %>
+
+<body class="bg-[#10181e]" style="font-family: 'Space Grotesk', sans-serif;">
+  <%
+    let ram = 0;
+    let disk = 0;
+    let cpu = 0;
+    let servers = pterodactyl.relationships.servers.data.length;
+    for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
+      ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
+      disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
+      cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
+  }
+  %>
+  <%- include('../components/navigation') %>
+  <div class="md:pl-64 flex flex-col flex-1 h-screen"> <%- include('../components/header') %>
+    <main class="flex-1 pb-32">
+      <div class="py-6">
+        <% /* Skeleton loader, lasts about 0.3s to let the page content load */ %>
+        <%- include('../components/skeleton') %>
+        <div class="hidden max-w-screen-2xl pt-8 mx-auto px-4 sm:px-6 md:px-16" id="content">
+          <div class="lg:flex lg:items-center lg:justify-between rounded-3xl mb-8">
+            <div class="min-w-0 flex-1">
+              <div class="flex">
+                <div class="relative">
+                  <h2 class="text-xl font-semibold text-white sm:truncate tracking-tight">Transfer</h2>
+                  <p class="text-sm font-normal text-zinc-400">Transfer your <%= settings.website.coins %> to other users.</p>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <% if (req.query.err && req.query.err == "none") { %>
+            <div class="rounded-2xl bg-[#162027]/30 shadow border-t border-white/5 p-8 mb-5">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <img src="../assets/alertLoader.png" class="h-7 w-7 mt-2 animate-spin">
+                </div>
+                <div class="ml-5">
+                  <h3 class="text-md font-medium tracking-tight text-white">Sending on <%= settings.website.coins %>2 network</h3>
+                  <div class="mt-1 text-sm text-zinc-400">
+                    <p>Please allow up to 60 seconds for the transfer to be completed.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+          <div class="card mt-5">
+            <div class="card-body">
+              <% /* User ID */ %>
+              <label for="ram" class="block text-white font-medium text-sm">User ID:</label>
+              <input type="text" class="mt-3 mb-6 px-4 py-2 w-96 border border-white/5 bg-[#162027]/30 border-none focus:ring-[#0a9875] transition font-medium pl-4 py-3 text-sm text-zinc-400 placeholder:text-zinc-500 tracking-tight rounded-2xl w-96" id="dc" placeholder="00000000000000000">
+
+              <% /* Amount */ %>
+              <label for="disk" class="block text-white font-medium text-sm"><%= settings.website.coins %> Amount:</label>
+              <input type="text" class="mt-3 px-4 py-2 w-96 border border-white/5 bg-[#162027]/30 border-none focus:ring-[#0a9875] transition font-medium pl-4 py-3 text-sm text-zinc-400 placeholder:text-zinc-500 tracking-tight rounded-2xl w-96" id="amount" placeholder="<%= (coins.toFixed(2)) %>">
+
+              <div class="relative">
+              <% /* Submit form */ %>
+              <a href="javascript:submitForm()" type="button" class="mt-6 inline-flex  flex-1 items-center rounded-2xl border-none bg-[#0a9875] px-4 py-2.5 text-sm font-medium text-white ring-none focus:outline-none">
+                Transfer
+              </a>
+            </div>
+              <br>
+            </div>
+            <script>
+              async function submitForm() {
+                let id = encodeURIComponent(document.getElementById("dc").value);
+                let coins = encodeURIComponent(document.getElementById("amount").value);
+                document.location.href = `/giftcoins?id=${id}&coins=${coins}`;
+              };
+            </script>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../components/footer') %>
+  </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js" integrity="sha512-eOUPKZXJTfgptSYQqVilRmxUNYm0XVHwcRHD4mdtCLWf/fC9XWe98IT8H1xzBkLL4Mo9GL0xWMSJtgS5te9rQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
